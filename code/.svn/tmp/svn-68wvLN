@@ -1,0 +1,17 @@
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
+
+#include "Character.h"
+#include <string>
+
+class Player: public Character {
+	std::string race;
+	int gold;
+   public:
+	int getAttack();
+	int getDefence();
+	int getGold();
+	int getRace();
+};
+
+#endif
