@@ -7,17 +7,17 @@
 #include <string>
 
 class Game {
-    protected:
 	Player* player;
 	Floor* floor;
 	int floorCount;
+	int playerDmg, enemyDmg;
 	std::string action;
    public:
-	Game( std::string );
-	virtual ~Game();
+	Game( std::string race );
+	~Game();
 	void gameLoop();
 	void endTurn();
-	virtual void resetFloor();
+    void resetFloor();
 };
 
 #endif

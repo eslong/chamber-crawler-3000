@@ -1,41 +1,30 @@
 #include "Character.h"
 #include "cell.h"
 #include <math.h>
-#include <iostream>
-#include <sstream>
 using namespace std;
 
 int Character::getHP() {
-	if ( hp <= 0 ) { return 0; }
-	else { return hp; }
+	return hp;
+}
+
+char Character::getGraphic() {
+	return graphic;
 }
 
 int Character::damage( int dmg ) {
-	float hit = ceil( ( (float)100 / ( (float)100 + (float)getDefense() ) )  * (float)dmg);
-    int ihit = (int)hit;
-    hp -= ihit;
-	return ihit;
+	int hit = ceil( ( 100 / ( 100 + def ) )  * dmg);
+	hp -= hit;
+	return hit;
 }
 
-string* Character::attack( string direction ) {
+int* Character::attack( string direction ) {
 	Cell* temp = c->getNeighbor( direction );
-	Character* target = temp->getTarget();
-	if ( target ) {
-		string* combat = new string[4];
-		string str;
-		stringstream ss;
-		ss << target->damage( getAttack() );
-		combat[2] = ss.str();
-		char c = temp->getCurrent();
-		ss.str( string() );
-		ss << c;
-		combat[0] = ss.str();
-		ss.str( string() );
-		ss << target->getHP();
-		combat[1] = ss.str();
-		ss.str( string() );
-		ss << target->getGold();
-		combat[3] = ss.str();
+	Character* enemy = temp->getOcc();
+	if ( enemy ) {
+		int combat[3];
+		combat[0] = enemy->getGraphic();
+		combat[1] = enemy->getHP();
+		combat[2] = enemy->damage( this->atk );
 		return combat;
 	} else {
 		return 0;
@@ -43,7 +32,7 @@ string* Character::attack( string direction ) {
 }
 
 bool Character::move(string direction) {
-	if(direction == "0") {
+    if(direction == "0") {
         c->notify(0);
         return true;
     }
@@ -81,22 +70,10 @@ void Character::setHealth(int h) {
     hp = h;
 }
 
+void Character::setHit(int n) {
+    hit = n;
+}
+
 void Character::addHealth(int h) {
     hp+=h;
-}
-
-bool Character::isEnemy() {
-	return en;
-}
-
-int Character::getAttack() {
-	return atk;
-}
-
-int Character::getDefense() {
-	return def;
-}
-
-int Character::getGold() {
-	return gold;
 }

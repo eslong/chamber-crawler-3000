@@ -46,21 +46,11 @@ char Cell::getDef() {
     return def;
 }
 
-Character* Cell::getTarget() {
-	char occ =  getCurrent();
-	if ( occ != '\\' && occ != 'P' && occ != 'G' && occ != getDef() ) {
-		Character* target = dynamic_cast<Character*>( this->g );
-		return target;
+Character* Cell::getOcc() {
+	char c = getCurrent();
+	if ( c != '\\' && c != 'P' && c != 'G' && getDef() == getCurrent() ) {
+		return g;
 	} else {
 		return 0;
 	}
-}
-
-Item *Cell::getPotion() {
-    char occ = getCurrent();
-    if(occ == 'P') {
-        Item *p = dynamic_cast<Item*>(g);
-        return p;
-    }
-    else return 0;
 }

@@ -1,11 +1,7 @@
 #ifndef __CELL_H__
 #define __CELL_H__
-
 #include <string.h>
 #include "textdisplay.h"
-#include "Character.h"
-#include "item.h"
-
 class GObject;
 
 class Cell {
@@ -26,8 +22,6 @@ class Cell {
     Cell *getNeighbor(std::string direction);
     char getCurrent();
     char getDef();
-    Character* getTarget();
-    Item *getPotion();
+    Character* getOcc();
 };
-
 #endif

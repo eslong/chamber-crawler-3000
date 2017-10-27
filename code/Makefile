@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -MMD
 EXEC = test
-OBJECTS = game.o cell.o Character.o door.o dwarf.o elf.o enemy.o floor.o GObject.o halfling.o human.o orc.o merchant.o room.o test.o textdisplay.o treasure.o healthpotion.o player.o shade.o stairs.o preset.o dragon.o
+OBJECTS = game.o cell.o Character.o door.o dwarf.o elf.o enemy.o floor.o GObject.o halfling.o human.o orc.o merchant.o room.o test.o textdisplay.o treasure.o healthpotion.o player.o shade.o stairs.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}

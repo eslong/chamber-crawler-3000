@@ -7,11 +7,9 @@
 #include "elf.h"
 #include "orc.h"
 #include "merchant.h"
-#include "dragon.h"
 #include "healthpotion.h"
 #include "treasure.h"
 #include "stairs.h"
-#include "temppotion.h"
 #include <cstdlib>
 #include <time.h>
 #include <iostream>
@@ -19,8 +17,6 @@ using namespace std;
 
 Floor::Floor() {
     enemyCount = 0;
-    potionCount = 0;
-    goldCount = 0;
    td = new TextDisplay(25, 79);
    rooms[0] = new Room(28, 6, 0, td);
    rooms[1] = new Room(39, 12, 1, td);
@@ -28,10 +24,12 @@ Floor::Floor() {
    rooms[3] = new Room(23, 9, 3, td);
    rooms[4] = new Room(41, 8, 4, td);
    p = new Passage(57, 17, td);
+   
    //To add the pointers from doors
    Cell *door;
    Cell *tile;
    //Room 0
+   cout<<"ADDING ROOM 0"<<endl;
    door = rooms[0]->getCell(11, 5);
    tile = p->getCell(0, 4);
    door->setTile(tile);
@@ -130,7 +128,7 @@ Floor::~Floor() {
     for(int i = 0; i < 20; i++) {
         delete enemies[i];
     }
-    for(int i = 0; i < potionCount; i++) {
+    for(int i = 0; i < 10; i++) {
         delete potions[i];
     }
     for(int i = 0; i < 10; i++) {
@@ -156,6 +154,7 @@ Cell *Floor::getACell(GObject *g) {
     srand(time(0));
     int n = rand()%5;
     g->setRoom(n);
+    cout<<"Going to return a cell"<<endl;
     return rooms[n]->getCell();
 }
 
@@ -222,7 +221,7 @@ void Floor::spawnPotion() {
     }
     srand(time(0));
     int n = rand()%6;
-    HealthPotion *p = new HealthPotion(10);
+    HealthPotion *p = new HealthPotion();
     p->setCell(c);
     potions[potionCount] = p;
     potionCount++;
@@ -231,7 +230,7 @@ void Floor::spawnPotion() {
 void Floor::moveEnemies() {
     for(int i = 0; i < 20; i++) {
         if(!enemies[i]) continue;
-        while(!enemies[i]->pathfind()) { action += enemies[i]->getAction(); }
+        while(!enemies[i]->pathfind());
     }
 }
 
@@ -248,7 +247,7 @@ void Floor::clear() {
         if(gold[i]) gold[i]->clearCell();
         delete gold[i];
     }
-    if(s) s->clearCell();
+    s->clearCell();
     delete s;
     goldCount = 0;
     potionCount = 0;
@@ -256,116 +255,13 @@ void Floor::clear() {
 }
 
 void Floor::init() {
+    for(int i = 0; i < 20; i++) {
+        spawnEnemy();
+    }
     for(int i = 0; i < 10; i++) {
         spawnPotion();
     }
     for(int i = 0; i < 10; i++) {
         spawnGold();
     }
-    for(int i = 0; i < 20; i++) {
-        spawnEnemy();
-    }
 }
-
-void Floor::addObject(int room, int x, int y, char c) {
-    Cell *ce = rooms[room]->getCell(x, y);
-    if(!ce) return;
-    if(ce->getDef() == '|' || ce->getDef() == '-' ||
-        ce->getDef() == ' ' || ce->getDef() == '+') return;
-    if(c == '0') {
-        potions[potionCount] = new HealthPotion(10);
-        potions[potionCount]->setCell(ce);
-        potionCount++;
-    }
-    else if(c == '1') {
-        potions[potionCount] = new TempPotion(5, 0);
-        potions[potionCount]->setCell(ce);
-        potionCount++;
-    }
-    else if(c == '2') {
-        potions[potionCount] = new TempPotion(0, 5);
-        potions[potionCount]->setCell(ce);
-        potionCount++;
-    }
-    else if(c == '3') {
-        potions[potionCount] = new HealthPotion(-10);
-        potions[potionCount]->setCell(ce);
-        potionCount++;
-    }
-    else if(c == '4') {
-        potions[potionCount] = new TempPotion(-5, 0);
-        potions[potionCount]->setCell(ce);
-        potionCount++;
-    }
-    else if(c == '5') {
-        potions[potionCount] = new TempPotion(0, -5);
-        potions[potionCount]->setCell(ce);
-        potionCount++;
-    }
-    else if(c == '6') {
-        gold[goldCount] = new Treasure(2);
-        gold[goldCount]->setCell(ce);
-        goldCount++;
-    }
-    else if(c == '7') {
-        gold[goldCount] = new Treasure(1);
-        gold[goldCount]->setCell(ce);
-        goldCount++;
-    }
-    else if(c == '8') {
-        gold[goldCount] = new Treasure(4);
-        gold[goldCount]->setCell(ce);
-        goldCount++;
-    }
-    else if(c == '9') {
-        gold[goldCount] = new Treasure(6);
-        gold[goldCount]->setCell(ce);
-        goldCount++;
-    }
-    else if(c == 'H') {
-        enemies[enemyCount] = new Human();
-        enemies[enemyCount]->setCell(ce);
-        enemyCount++;
-    }
-    else if(c == 'W') {
-        enemies[enemyCount] = new Dwarf();
-        enemies[enemyCount]->setCell(ce);
-        enemyCount++;
-    }
-    else if(c == 'E') {
-        enemies[enemyCount] = new Elf();
-        enemies[enemyCount]->setCell(ce);
-        enemyCount++;
-    }
-    else if(c == 'O') {
-        enemies[enemyCount] = new Orc();
-        enemies[enemyCount]->setCell(ce);
-        enemyCount++;
-    }
-    else if(c == 'M') {
-        enemies[enemyCount] = new Merchant();
-        enemies[enemyCount]->setCell(ce);
-        enemyCount++;
-    }
-    else if(c == 'L') {
-        enemies[enemyCount] = new Halfling();
-        enemies[enemyCount]->setCell(ce);
-        enemyCount++;
-    }
-    else if(c == 'D') {
-        enemies[enemyCount] = new Dragon();
-        enemies[enemyCount]->setCell(ce);
-        enemyCount++;
-    }
-    else if(c == '\\') {
-        s = new Stairs();
-        s->setCell(ce);
-    }
-}
-
-Cell* Floor::getCell(int room, int x, int y) {
-    return rooms[room]->getCell(x, y);
-}
-
-string Floor::getAction() { return action; }
-

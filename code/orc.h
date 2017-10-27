@@ -2,13 +2,12 @@
 #define __ORC_H__
 
 #include "enemy.h"
-#include <string>
 
 class Orc: public Enemy {
    public:
 	Orc();
 	~Orc();
-//	std::string* attack( std::string );
+	//void attack( Player* p );
 };
 
 #endif

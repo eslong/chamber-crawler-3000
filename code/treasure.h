@@ -9,6 +9,6 @@ class Treasure: public Item {
             setGraphic('G');
         }
         int getValue();
-        void action();
+        void action(Character *c);
 };
 #endif

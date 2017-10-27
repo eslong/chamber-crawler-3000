@@ -8,6 +8,7 @@ using namespace std;
 
 Room::Room(int x, int y, int type, TextDisplay *td): x(x), y(y) {
   tiles = new Cell **[y];
+  cout<<"made the tiles"<<endl; 
   for(int i = 0; i < y; i++) {
     tiles[i] = new Cell *[x];
   }
@@ -18,6 +19,7 @@ Room::Room(int x, int y, int type, TextDisplay *td): x(x), y(y) {
   else if(type == 2) initRoom2(td);
   else if(type == 3) initRoom3(td);
   else if(type == 4) initRoom4(td);
+    cout<<"inited the room!"<<endl;
   if(type != 5) addNeighbors();
 }
 
@@ -291,4 +293,3 @@ Cell *Room::getCell() {
     }
     return ce;
 }
-

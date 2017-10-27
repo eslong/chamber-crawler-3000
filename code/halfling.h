@@ -7,7 +7,6 @@ class Halfling: public Enemy {
    public:
 	Halfling();
 	~Halfling();
-	int damage( int dmg );
 };
 
 #endif

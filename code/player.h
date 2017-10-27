@@ -7,15 +7,19 @@ class Game;
 
 class Player: public Character {
 	std::string race;
-	Game* g;
+	int gold;
+    Game *g;
+    void notifyReset();
    public:
-	void notifyReset();
+	//Player();
+	//~Player();
+	int getAttack();
 	int getDefence();
+	int getGold();
 	std::string getRace();
-        void setGame(Game *game);
-	void setRace( std::string race );
-	void setGold( int g );
-        Player *useItem(std::string direction);
+	void setRace( std::string );
+	void setGold( int n );
+    void setGame(Game *game);
 };
 
-#endif
+#endif	

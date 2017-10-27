@@ -5,10 +5,10 @@
 class HealthPotion: public Item {
     int health;
     public:
-        HealthPotion(int health): health(health) {
+        HealthPotion(): health(10) {
             setGraphic('P');
         }
         int getHealth();
-        Player *action(Player *c);
+        void action(Character *c);
 };
 #endif

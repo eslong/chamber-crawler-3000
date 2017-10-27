@@ -32,5 +32,3 @@ void GObject::setRoom(int n) {
 int GObject::getRoom() {
     return room;
 }
-
-void GObject::dummy() {}

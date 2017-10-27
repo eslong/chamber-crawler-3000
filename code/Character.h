@@ -6,7 +6,7 @@
 
 class Character: public GObject {
   protected:
-    int hp, atk, def, gold;
+    int hp, atk, def;
     void setAttack(int a);
     void setHealth(int h);
     void setDefense(int d);
@@ -14,13 +14,11 @@ class Character: public GObject {
     virtual void notifyReset() { };
   public:
 	int getHP();
-	virtual int damage( int dmg );
-	virtual std::string* attack( std::string direction );
-	virtual bool move(std::string direction);
+	char getGraphic();
+	void damage( int dmg );
+	virtual int* attack( std::string direction );
+	bool move(std::string direction);
         void addHealth(int h);
-	bool isEnemy();
-	virtual int getAttack();
-	virtual int getDefense();
-	virtual int getGold();
 };
+
 #endif

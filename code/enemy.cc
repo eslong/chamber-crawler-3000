@@ -7,25 +7,22 @@ using namespace std;
 bool Enemy::pathfind() {
 	string dir;		
 	int n = rand() % 8;
-	Character* target;
-
-	string cardinals[8] = { "no", "so", "ea", "we", "ne", "nw", "se", "sw" };
-	for ( int i = 0; i < 8; i++ ) {
-		dir = cardinals[i];
-		if ( ( target = c->getNeighbor( dir )->getTarget() ) && !(target->isEnemy() ) ) {
-			if ( n % 2 == 0 ) {
-				string* combat = this->attack( dir );
-				return setAction( combat );
-			}
-		}
+	if ( n == 0 ) {
+		dir = "no";
+	} else if ( n == 1 ) {
+		dir = "so";
+	} else if ( n == 2 ) {
+		dir = "ea";
+	} else if ( n == 3 ) {
+		dir = "we";
+	} else if ( n == 4 ) {
+		dir = "ne";
+	} else if ( n == 5 ) {
+		dir = "nw";
+	} else if ( n == 6 ) {
+		dir = "se";
+	} else if ( n == 7 ) {
+		dir = "sw";
 	}
-
-	dir = cardinals[n];
-
-	return move(dir);
+    return move(dir);
 }
-
-bool Enemy::setAction( string* combat ) { action = combat[0] + " deals " + combat[2] + " damage to PC."; return true; }
-
-string Enemy::getAction() { return action; }
-

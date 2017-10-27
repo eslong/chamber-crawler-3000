@@ -1,4 +1,4 @@
 #include "stairs.h"
 
-void Stairs::action() {
+void Stairs::action(Character *c) {
 }

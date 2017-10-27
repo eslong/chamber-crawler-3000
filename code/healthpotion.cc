@@ -1,10 +1,9 @@
 #include "healthpotion.h"
-#include "player.h"
+#include "Character.h"
 int HealthPotion::getHealth() {
     return health;
 }
 
-Player *HealthPotion::action(Player *p) {
-    p->addHealth(health);
-    return p;
+void HealthPotion::action(Character *c) {
+    c->addHealth(health);
 }

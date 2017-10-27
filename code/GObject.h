@@ -1,8 +1,5 @@
 #ifndef __GOBJECT_H__
 #define __GOBJECT_H__
-
-#include <string>
-
 class Cell;
 
 class GObject {
@@ -26,7 +23,5 @@ class GObject {
     int getX();
     void setRoom(int n);
     int getRoom();
-    virtual void dummy();
 };
-
 #endif

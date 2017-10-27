@@ -2,7 +2,7 @@
 #include "cell.h"
 
 Dwarf::Dwarf() {
-    setGraphic('W');
+    setGraphic('D');
     setHealth(100);
     setAttack(20);
     setDefense(30);

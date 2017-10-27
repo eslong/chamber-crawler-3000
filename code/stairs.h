@@ -7,7 +7,7 @@ class Stairs: public Item {
         Stairs() {
             setGraphic('\\');
         }
-        void action();
+        void action(Character *c);
 };
 
 #endif
